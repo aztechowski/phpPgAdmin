@@ -22,6 +22,7 @@
 // security - hide paths
 if (!defined('ADODB_DIR')) die();
 
+#[AllowDynamicProperties]
 class ADODB_postgres64 extends ADOConnection{
 	var $databaseType = 'postgres64';
 	var $dataProvider = 'postgres';
@@ -929,6 +930,7 @@ class ADODB_postgres64 extends ADOConnection{
 	Class Name: Recordset
 --------------------------------------------------------------------------------------*/
 
+#[AllowDynamicProperties]
 class ADORecordSet_postgres64 extends ADORecordSet{
 	var $_blobArr;
 	var $databaseType = "postgres64";
@@ -1075,7 +1077,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 
 	function _close()
 	{
-		if ($this->_queryID === false) {
+		if ($this->_queryID === false || $this->_queryID == self::DUMMY_QUERY_ID) {
 			return true;
 		}
 		return pg_free_result($this->_queryID);
